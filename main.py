@@ -33,15 +33,7 @@ class MainWindow(QMainWindow, Form):
         self.flag_bold = 0
         self.flag_italic = 0
         self.flag_underline = 0
-        # self.setupUi(self)
-        # self.textEdit.setStyleSheet("background:#FBF7F4")
-        # self.setStyleSheet("background-color:#6C9A8B;")
-        # self.NewButton.setStyleSheet("background-color : #429EA6")
-        # self.BoldButton.setStyleSheet("background-color : #429EA6")
-        # self.italicButton.setStyleSheet("background-color : #429EA6")
-        # self.underlineButton.setStyleSheet("background-color : #429EA6")
-        # self.saveButton.setStyleSheet("background-color : #429EA6")
-        # self.OpenButton.setStyleSheet("background-color : #429EA6")
+        self.setupUi(self)
         # self.editor = QPlainTextEdit()  # Could also use a QTextEdit and set self.editor.setAcceptRichText(False)
         # self.setCentralWidget(self.editor)
 
