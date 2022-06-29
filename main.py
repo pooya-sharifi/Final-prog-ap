@@ -31,9 +31,17 @@ class MainWindow(QMainWindow, Form):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.flag_bold = 0
-        self.flag_italic=0
-        self.flag_underline=0
-        self.setupUi(self)
+        self.flag_italic = 0
+        self.flag_underline = 0
+        # self.setupUi(self)
+        # self.textEdit.setStyleSheet("background:#FBF7F4")
+        # self.setStyleSheet("background-color:#6C9A8B;")
+        # self.NewButton.setStyleSheet("background-color : #429EA6")
+        # self.BoldButton.setStyleSheet("background-color : #429EA6")
+        # self.italicButton.setStyleSheet("background-color : #429EA6")
+        # self.underlineButton.setStyleSheet("background-color : #429EA6")
+        # self.saveButton.setStyleSheet("background-color : #429EA6")
+        # self.OpenButton.setStyleSheet("background-color : #429EA6")
         # self.editor = QPlainTextEdit()  # Could also use a QTextEdit and set self.editor.setAcceptRichText(False)
         # self.setCentralWidget(self.editor)
 
@@ -48,25 +56,26 @@ class MainWindow(QMainWindow, Form):
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
 
-
         # fekr konam font ro darim okay mikonim inja
         fixedFont = QFontDatabase.systemFont(QFontDatabase.FixedFont)
         fixedFont.setPointSize(5000000)
         self.editor = QPlainTextEdit()
         self.editor.setFont(fixedFont)
+
     def underline(self):
         print("underline")
         # self.textEdit.setFontUnderline(True)
         print(self.flag_underline)
-        if (self.flag_underline==0):
+        if self.flag_underline == 0:
             self.textEdit.setFontUnderline(True)
-            self.flag_underline=1
+            self.flag_underline = 1
             print(self.flag_underline)
         else:
             print(self.flag_underline)
             self.textEdit.setFontUnderline(False)
-            self.flag_underline=0
+            self.flag_underline = 0
             print(self.flag_underline)
+
     def Newpage(self):
         print("newpage")
         self.textEdit.clear()
@@ -75,29 +84,28 @@ class MainWindow(QMainWindow, Form):
     def Bold(self):
         print("Bold clicked")
         print(self.flag_bold)
-        if (self.flag_bold==0):
+        if self.flag_bold == 0:
             self.textEdit.setFontWeight(QFont.Bold)
-            self.flag_bold=1
+            self.flag_bold = 1
             print(self.flag_bold)
         else:
             print(self.flag_bold)
             self.textEdit.setFontWeight(QFont.Normal)
-            self.flag_bold=0
+            self.flag_bold = 0
             print(self.flag_bold)
+
     def italic(self):
         print("italic clicked")
         print(self.flag_italic)
-        if (self.flag_italic==0):
+        if self.flag_italic == 0:
             self.textEdit.setFontItalic(True)
-            self.flag_italic=1
+            self.flag_italic = 1
             print(self.flag_italic)
         else:
             print(self.flag_italic)
             self.textEdit.setFontItalic(False)
-            self.flag_italic=0
+            self.flag_italic = 0
             print(self.flag_italic)
-
-            
 
     def open_dialog_box(self):
         filename = QFileDialog.getOpenFileName()
@@ -109,23 +117,26 @@ class MainWindow(QMainWindow, Form):
         #     with in__data:
         #         Text__ = in__data.read()
         #         self.textEdit.setText(Text__)
-        with open(path,"r") as f:
+        with open(path, "r") as f:
             # print(f.readline())
             _text = f.readline()
             self.textEdit.setText(_text)
 
     def Save__File(self):
         # S_File will get the directory path and extension.
-        S__File = QFileDialog.getSaveFileName(None,'SaveTextFile','/', "Text Files (*.txt)")
-    
+        S__File = QFileDialog.getSaveFileName(
+            None, "SaveTextFile", "/", "Text Files (*.txt)"
+        )
+
         # This will let you access the test in your QTextEdit
         Text = self.textEdit.toPlainText()
-    
+
         # This will prevent you from an error if pressed cancel on file dialog.
-        if S__File[0]: 
-        # Finally this will Save your file to the path selected.
-            with open(S__File[0], 'w') as file:
+        if S__File[0]:
+            # Finally this will Save your file to the path selected.
+            with open(S__File[0], "w") as file:
                 file.write(Text)
+
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
