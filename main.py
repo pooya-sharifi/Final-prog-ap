@@ -19,6 +19,8 @@ from PyQt5.QtWidgets import (
     QPlainTextEdit,
     QInputDialog,
     QFileDialog,
+    QAction,
+    QToolBar
 )
 from PyQt5.QtGui import QFontDatabase, QFont
 import numpy as np
@@ -47,6 +49,28 @@ class MainWindow(QMainWindow, Form):
         self.underlineButton.clicked.connect(self.underline)
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
+        # self.redoButton.clicked.connect(self.Redo_text)
+
+####################################################
+        edit_toolbar = QToolBar("Edit")
+        self.addToolBar(edit_toolbar)
+        edit_menu = self.menuBar().addMenu("&Edit")
+####################################################
+        # undo action
+        undo_action = QAction("UNDO", self)
+        undo_action.setStatusTip("Undo last change")
+        undo_action.triggered.connect(self.textEdit.undo)
+        edit_toolbar.addAction(undo_action)
+        edit_menu.addAction(undo_action)
+
+        # redo action
+        redo_action = QAction("REDO", self)
+        redo_action.setStatusTip("Redo last change")
+        redo_action.triggered.connect(self.textEdit.redo)
+        edit_toolbar.addAction(redo_action)
+        edit_menu.addAction(redo_action)
+
+
 
 
         # fekr konam font ro darim okay mikonim inja
@@ -126,6 +150,10 @@ class MainWindow(QMainWindow, Form):
         # Finally this will Save your file to the path selected.
             with open(S__File[0], 'w') as file:
                 file.write(Text)
+
+
+    def Redo_text(self):
+        pass
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
