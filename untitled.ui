@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="saveButton">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -102,7 +102,7 @@
      <string>Bold</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="italicButton">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -128,7 +128,7 @@
      <string>Open</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="underlineButton">
     <property name="geometry">
      <rect>
       <x>0</x>
