@@ -95,12 +95,12 @@ class MainWindow(QMainWindow, Form):
         edit_toolbar.addAction(paste_action)
         edit_menu.addAction(paste_action)
  
-        # # select all action
-        # select_action = QAction("Select all", self)
-        # select_action.setStatusTip("Select all text")
-        # select_action.triggered.connect(self.textEdit.selectAll)
-        # edit_toolbar.addAction(select_action)
-        # edit_menu.addAction(select_action)
+        # select all action
+        select_action = QAction("Select all", self)
+        select_action.setStatusTip("Select all text")
+        select_action.triggered.connect(self.textEdit.selectAll)
+        edit_toolbar.addAction(select_action)
+        edit_menu.addAction(select_action)
 
 
         # fekr konam font ro darim okay mikonim inja
