@@ -42,9 +42,8 @@ class MainWindow(QMainWindow, Form):
         self.underlineButton.clicked.connect(self.underline)
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
-        # self.redoButton.clicked.connect(self.Redo_text)
 
-        # setGeometry(left, top, width, height)
+        # setGeometry(left, top, width, height)   <- hint bara inke yadam nare
         self.setGeometry(100, 100, 1100, 900)
         # self.setFixedSize(self.textEdit.sizeHint())
 
@@ -54,6 +53,16 @@ class MainWindow(QMainWindow, Form):
 
         self.save_file_shortcut = QShortcut(QKeySequence('Ctrl+S'), self)
         self.save_file_shortcut.activated.connect(self.Save__File)
+
+        self.italic_text_shortcut = QShortcut(QKeySequence('Ctrl+I'), self)
+        self.italic_text_shortcut.activated.connect(self.italic)
+
+        self.bold_text_shortcut = QShortcut(QKeySequence('Ctrl+B'), self)
+        self.bold_text_shortcut.activated.connect(self.Bold)
+
+        self.underline_text_shortcut = QShortcut(QKeySequence('Ctrl+U'), self)
+        self.underline_text_shortcut.activated.connect(self.underline)
+
 
 ####################################################
         edit_toolbar = QToolBar("Edit")
@@ -121,9 +130,23 @@ class MainWindow(QMainWindow, Form):
             self.textEdit.setFontUnderline(False)
             self.flag_underline=0
             print(self.flag_underline)
-    def Newpage(self):
+
+    def Newpage(self, event):
         print("newpage")
-        self.textEdit.clear()
+        messageBox = QMessageBox()
+        title = "New page?"
+        message = "WARNING !!\n\nIf you quit without saving, any changes made to the file will be lost.\n\nSave file before quiting?"
+    
+        reply = messageBox.question(self, title, message, messageBox.Yes | messageBox.No |
+                messageBox.Cancel, messageBox.Cancel)
+        if reply == messageBox.Yes:
+            return_value = self.Save__File()
+            if return_value == False:
+                event.ignore()  
+        elif reply == messageBox.No:
+            self.textEdit.clear()
+        else:
+            messageBox.close()
         # self.open_dialog_box()
 
     def Bold(self):
@@ -150,8 +173,6 @@ class MainWindow(QMainWindow, Form):
             self.textEdit.setFontItalic(False)
             self.flag_italic=0
             print(self.flag_italic)
-
-            
 
     def open_dialog_box(self):
         filename = QFileDialog.getOpenFileName()
@@ -182,6 +203,8 @@ class MainWindow(QMainWindow, Form):
                 file.write(Text)
 
     def closeEvent(self, event):
+        # if self.textEdit.empty() == 1:
+        #     self.close()
         messageBox = QMessageBox()
         title = "Quit Application?"
         message = "WARNING !!\n\nIf you quit without saving, any changes made to the file will be lost.\n\nSave file before quitting?"
@@ -189,17 +212,13 @@ class MainWindow(QMainWindow, Form):
         reply = messageBox.question(self, title, message, messageBox.Yes | messageBox.No |
                 messageBox.Cancel, messageBox.Cancel)
         if reply == messageBox.Yes:
-            return_value = self.save_current_file()
+            return_value = self.Save__File()
             if return_value == False:
                 event.ignore()  
         elif reply == messageBox.No:
             event.accept()
         else:
             event.ignore()
-
-
-    def Redo_text(self):
-        pass
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
