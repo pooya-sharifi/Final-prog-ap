@@ -13,16 +13,9 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QVBoxLayout,
-    QPlainTextEdit,
-    QInputDialog,
-    QFileDialog,
-    QAction,
-    QToolBar
+    QApplication, QMainWindow, QVBoxLayout, QPlainTextEdit, QInputDialog, QFileDialog, QAction, QToolBar, QShortcut, QMessageBox
 )
-from PyQt5.QtGui import QFontDatabase, QFont
+from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 import numpy as np
 from time import sleep
 
@@ -52,8 +45,15 @@ class MainWindow(QMainWindow, Form):
         # self.redoButton.clicked.connect(self.Redo_text)
 
         # setGeometry(left, top, width, height)
-        # self.setGeometry(100, 100, 1000, 700)
+        self.setGeometry(100, 100, 1100, 900)
         # self.setFixedSize(self.textEdit.sizeHint())
+
+        # shortcuts
+        self.open_new_file_shortcut = QShortcut(QKeySequence('Ctrl+O'), self)
+        self.open_new_file_shortcut.activated.connect(self.open_dialog_box)
+
+        self.save_file_shortcut = QShortcut(QKeySequence('Ctrl+S'), self)
+        self.save_file_shortcut.activated.connect(self.Save__File)
 
 ####################################################
         edit_toolbar = QToolBar("Edit")
@@ -180,6 +180,22 @@ class MainWindow(QMainWindow, Form):
         # Finally this will Save your file to the path selected.
             with open(S__File[0], 'w') as file:
                 file.write(Text)
+
+    def closeEvent(self, event):
+        messageBox = QMessageBox()
+        title = "Quit Application?"
+        message = "WARNING !!\n\nIf you quit without saving, any changes made to the file will be lost.\n\nSave file before quitting?"
+    
+        reply = messageBox.question(self, title, message, messageBox.Yes | messageBox.No |
+                messageBox.Cancel, messageBox.Cancel)
+        if reply == messageBox.Yes:
+            return_value = self.save_current_file()
+            if return_value == False:
+                event.ignore()  
+        elif reply == messageBox.No:
+            event.accept()
+        else:
+            event.ignore()
 
 
     def Redo_text(self):
