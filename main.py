@@ -32,6 +32,7 @@ class MainWindow(QMainWindow, Form):
         self.setupUi(self)
         self.setWindowTitle("Text editor")
         self.setStyleSheet("background-color: none;")
+        self.spinBox.setValue(8)
         # self.editor = QPlainTextEdit()  # Could also use a QTextEdit and set self.editor.setAcceptRichText(False)
         # self.setCentralWidget(self.editor)
 
@@ -47,6 +48,7 @@ class MainWindow(QMainWindow, Form):
         self.OpenButton.clicked.connect(self.open_dialog_box)
         self.ColorButton.clicked.connect(self.text_color)
         self.FontButton.clicked.connect(self.text_font)
+        self.spinBox.valueChanged.connect(self.font_size)
 
 
         self.BoldButton.setStyleSheet("background-color : white")
@@ -246,6 +248,11 @@ class MainWindow(QMainWindow, Form):
         font, ok = QFontDialog.getFont()
         if ok:
             self.textEdit.setFont(font)
+
+    def font_size(self):
+        # pass
+        val = self.spinBox.value()
+        self.textEdit.setFontPointSize(val)
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
