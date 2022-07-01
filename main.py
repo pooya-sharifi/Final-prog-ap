@@ -44,7 +44,7 @@ class MainWindow(QMainWindow, Form):
         self.OpenButton.clicked.connect(self.open_dialog_box)
 
         # setGeometry(left, top, width, height)   <- hint bara inke yadam nare
-        self.setGeometry(100, 100, 1100, 900)
+        # self.setGeometry(100, 100, 1100, 900)
         # self.setFixedSize(self.textEdit.sizeHint())
 
         # shortcuts
