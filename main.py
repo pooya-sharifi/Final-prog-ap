@@ -88,12 +88,12 @@ class MainWindow(QMainWindow, Form):
         edit_toolbar.addAction(copy_action)
         edit_menu.addAction(copy_action)
  
-        # # paste action
-        # paste_action = QAction("Paste", self)
-        # paste_action.setStatusTip("Paste from clipboard")
-        # paste_action.triggered.connect(self.textEdit.paste)
-        # edit_toolbar.addAction(paste_action)
-        # edit_menu.addAction(paste_action)
+        # paste action
+        paste_action = QAction("Paste", self)
+        paste_action.setStatusTip("Paste from clipboard")
+        paste_action.triggered.connect(self.textEdit.paste)
+        edit_toolbar.addAction(paste_action)
+        edit_menu.addAction(paste_action)
  
         # # select all action
         # select_action = QAction("Select all", self)
