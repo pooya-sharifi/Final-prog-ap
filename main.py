@@ -1,6 +1,7 @@
 from fileinput import filename
 import os
 import sys
+from tkinter import font
 import matplotlib
 from matplotlib.pyplot import flag
 
@@ -13,7 +14,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QPlainTextEdit, QInputDialog, QFileDialog, QAction, QToolBar, QShortcut, QMessageBox
+    QApplication, QMainWindow, QVBoxLayout, QPlainTextEdit, QInputDialog, QFileDialog, QAction, QToolBar, QShortcut, QMessageBox, QColorDialog, QFontDialog, QTextEdit
 )
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 import numpy as np
@@ -29,6 +30,8 @@ class MainWindow(QMainWindow, Form):
         self.flag_italic=0
         self.flag_underline=0
         self.setupUi(self)
+        self.setWindowTitle("Text editor")
+        self.setStyleSheet("background-color: none;")
         # self.editor = QPlainTextEdit()  # Could also use a QTextEdit and set self.editor.setAcceptRichText(False)
         # self.setCentralWidget(self.editor)
 
@@ -42,7 +45,20 @@ class MainWindow(QMainWindow, Form):
         self.underlineButton.clicked.connect(self.underline)
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
+        self.ColorButton.clicked.connect(self.text_color)
+        self.FontButton.clicked.connect(self.text_font)
 
+
+        self.BoldButton.setStyleSheet("background-color : white")
+        self.italicButton.setStyleSheet("background-color : white")
+        self.BoldButton.setStyleSheet("background-color : white")
+        self.underlineButton.setStyleSheet("background-color : white")
+        self.NewButton.setStyleSheet("background-color : white")
+        self.OpenButton.setStyleSheet("background-color : white")
+        self.saveButton.setStyleSheet("background-color : white")
+        self.ColorButton.setStyleSheet("background-color : white")
+        self.FontButton.setStyleSheet("background-color : white")
+        self.spinBox.setStyleSheet("background-color : white")
         # setGeometry(left, top, width, height)   <- hint bara inke yadam nare
         # self.setGeometry(100, 100, 1100, 900)
         # self.setFixedSize(self.textEdit.sizeHint())
@@ -205,6 +221,7 @@ class MainWindow(QMainWindow, Form):
     def closeEvent(self, event):
         # if self.textEdit.empty() == 1:
         #     self.close()
+        # self.
         messageBox = QMessageBox()
         title = "Quit Application?"
         message = "WARNING !!\n\nIf you quit without saving, any changes made to the file will be lost.\n\nSave file before quitting?"
@@ -219,6 +236,16 @@ class MainWindow(QMainWindow, Form):
             event.accept()
         else:
             event.ignore()
+    
+    def text_color(self):
+        color = QColorDialog.getColor()
+        self.textEdit.setTextColor(color)
+
+    def text_font(self):
+        # pass
+        font, ok = QFontDialog.getFont()
+        if ok:
+            self.textEdit.setFont(font)
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
