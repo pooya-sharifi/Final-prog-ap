@@ -48,6 +48,60 @@ class MainWindow(QMainWindow, Form):
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
 
+        # self.redoButton.clicked.connect(self.Redo_text)
+
+        # setGeometry(left, top, width, height)
+        # self.setGeometry(100, 100, 1000, 700)
+        # self.setFixedSize(self.textEdit.sizeHint())
+
+####################################################
+        edit_toolbar = QToolBar("Edit")
+        self.addToolBar(edit_toolbar)
+        edit_menu = self.menuBar().addMenu("&Edit")
+####################################################
+        # undo action
+        undo_action = QAction("UNDO", self)
+        undo_action.setStatusTip("Undo last change")
+        undo_action.triggered.connect(self.textEdit.undo)
+        edit_toolbar.addAction(undo_action)
+        edit_menu.addAction(undo_action)
+
+        # redo action
+        redo_action = QAction("REDO", self)
+        redo_action.setStatusTip("Redo last change")
+        redo_action.triggered.connect(self.textEdit.redo)
+        edit_toolbar.addAction(redo_action)
+        edit_menu.addAction(redo_action)
+
+       # cut action
+        cut_action = QAction("Cut", self)
+        cut_action.setStatusTip("Cut selected text")
+        cut_action.triggered.connect(self.textEdit.cut)
+        edit_toolbar.addAction(cut_action)
+        edit_menu.addAction(cut_action)
+ 
+        # copy action
+        copy_action = QAction("Copy", self)
+        copy_action.setStatusTip("Copy selected text")
+        copy_action.triggered.connect(self.textEdit.copy)
+        edit_toolbar.addAction(copy_action)
+        edit_menu.addAction(copy_action)
+ 
+        # paste action
+        paste_action = QAction("Paste", self)
+        paste_action.setStatusTip("Paste from clipboard")
+        paste_action.triggered.connect(self.textEdit.paste)
+        edit_toolbar.addAction(paste_action)
+        edit_menu.addAction(paste_action)
+ 
+        # select all action
+        select_action = QAction("Select all", self)
+        select_action.setStatusTip("Select all text")
+        select_action.triggered.connect(self.textEdit.selectAll)
+        edit_toolbar.addAction(select_action)
+        edit_menu.addAction(select_action)
+
+
         # fekr konam font ro darim okay mikonim inja
         fixedFont = QFontDatabase.systemFont(QFontDatabase.FixedFont)
         fixedFont.setPointSize(5000000)
