@@ -1,7 +1,10 @@
 from fileinput import filename
+from msilib.schema import Font
 import os
 import sys
+
 from tkinter import font
+from tkinter import Spinbox
 import matplotlib
 from matplotlib.pyplot import flag
 
@@ -12,9 +15,22 @@ matplotlib.use("Qt5Agg")
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore,QtGui
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QPlainTextEdit, QInputDialog, QFileDialog, QAction, QToolBar, QShortcut, QMessageBox, QColorDialog, QFontDialog, QTextEdit
+    QApplication,
+    QMainWindow,
+    QVBoxLayout,
+    QPlainTextEdit,
+    QInputDialog,
+    QFileDialog,
+    QAction,
+    QToolBar,
+    QShortcut,
+    QMessageBox,
+    QTextEdit,
+    QColorDialog,
+    QFontDialog,
+    QTextEdit
 )
 from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
 import numpy as np
@@ -46,10 +62,18 @@ class MainWindow(QMainWindow, Form):
         self.underlineButton.clicked.connect(self.underline)
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
+
         self.ColorButton.clicked.connect(self.text_color)
         self.FontButton.clicked.connect(self.text_font)
         self.spinBox.valueChanged.connect(self.font_size)
-
+        
+        # inja ro avaz kardam
+        # getting current value
+        self.spinBox.setValue(8)
+        self.spinBox.valueChanged.connect(self.Font_change)
+        # var = StringVar(root)
+        
+        # self.redoButton.clicked.connect(self.Redo_text)
 
         self.BoldButton.setStyleSheet("background-color : white")
         self.italicButton.setStyleSheet("background-color : white")
@@ -219,6 +243,29 @@ class MainWindow(QMainWindow, Form):
         # Finally this will Save your file to the path selected.
             with open(S__File[0], 'w') as file:
                 file.write(Text)
+    
+    def Font_change(self):
+        value = self.spinBox.value()
+        print(value)
+        # setting value of spin box to the label
+        # # self.label.setText("Value : " + str(value))
+        # font = QtGui.QFont()
+        # font = self.textEdit.font()
+        # font.setPointSize(value)
+        # self.textEdit.setFont(font)
+        # self.textEdit.setFont(QFont.setPointSize("times",value))
+        # font = QtGui.QFont()
+        # font = self.textEdit.font()
+        # font.setPointSize(value)
+        # self.textEdit.setCurrentCharFormat(font)
+        # font, valid = QtGui.QFontDialog.getFont()
+        # if valid:
+        #     self.styleChoice.setFont(font)
+        # self.textEdit.setCurrentCharFormat(value)
+        # 
+        # 
+        self.textEdit.setFontPointSize(value)
+        
 
     def closeEvent(self, event):
         # if self.textEdit.empty() == 1:
