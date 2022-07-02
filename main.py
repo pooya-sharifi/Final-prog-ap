@@ -30,9 +30,9 @@ from PyQt5.QtWidgets import (
     QTextEdit,
     QColorDialog,
     QFontDialog,
-    QTextEdit
+    QTextEdit,
 )
-from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence
+from PyQt5.QtGui import QFontDatabase, QFont, QKeySequence,QIcon
 import numpy as np
 from time import sleep
 
@@ -51,10 +51,12 @@ class MainWindow(QMainWindow, Form):
         self.spinBox.setValue(8)
         # self.editor = QPlainTextEdit()  # Could also use a QTextEdit and set self.editor.setAcceptRichText(False)
         # self.setCentralWidget(self.editor)
-
+        # setting icon
+        self.leftAlignButton.setIcon(QIcon('left_align.png'))
+        self.rightAlignButton.setIcon(QIcon('right_align.png'))
+        self.centerAlignButton.setIcon(QIcon('center_align.png'))
         # Setup the QTextEdit editor configuration
-        # fixedfont = QFontDatabase.systemFont(QFontDatabase.FixedFont)
-        # fixedfont.setPointSize(12)
+        
         # self.editor.setFont(fixedfont)
         self.NewButton.clicked.connect(self.Newpage)
         self.BoldButton.clicked.connect(self.Bold)
@@ -62,16 +64,17 @@ class MainWindow(QMainWindow, Form):
         self.underlineButton.clicked.connect(self.underline)
         self.saveButton.clicked.connect(self.Save__File)
         self.OpenButton.clicked.connect(self.open_dialog_box)
-
+        self.centerAlignButton.clicked.connect(self.center_align)
+        self.leftAlignButton.clicked.connect(self.lef_align)
+        self.rightAlignButton.clicked.connect(self.rig_align)
         self.ColorButton.clicked.connect(self.text_color)
         self.FontButton.clicked.connect(self.text_font)
         self.spinBox.valueChanged.connect(self.font_size)
         
-        # inja ro avaz kardam
         # getting current value
         self.spinBox.setValue(8)
         self.spinBox.valueChanged.connect(self.Font_change)
-        # var = StringVar(root)
+        
         
         # self.redoButton.clicked.connect(self.Redo_text)
 
@@ -85,10 +88,7 @@ class MainWindow(QMainWindow, Form):
         self.ColorButton.setStyleSheet("background-color : white")
         self.FontButton.setStyleSheet("background-color : white")
         self.spinBox.setStyleSheet("background-color : white")
-        # setGeometry(left, top, width, height)   <- hint bara inke yadam nare
-        # self.setGeometry(100, 100, 1100, 900)
-        # self.setFixedSize(self.textEdit.sizeHint())
-
+        
         # shortcuts
         self.open_new_file_shortcut = QShortcut(QKeySequence('Ctrl+O'), self)
         self.open_new_file_shortcut.activated.connect(self.open_dialog_box)
@@ -247,23 +247,6 @@ class MainWindow(QMainWindow, Form):
     def Font_change(self):
         value = self.spinBox.value()
         print(value)
-        # setting value of spin box to the label
-        # # self.label.setText("Value : " + str(value))
-        # font = QtGui.QFont()
-        # font = self.textEdit.font()
-        # font.setPointSize(value)
-        # self.textEdit.setFont(font)
-        # self.textEdit.setFont(QFont.setPointSize("times",value))
-        # font = QtGui.QFont()
-        # font = self.textEdit.font()
-        # font.setPointSize(value)
-        # self.textEdit.setCurrentCharFormat(font)
-        # font, valid = QtGui.QFontDialog.getFont()
-        # if valid:
-        #     self.styleChoice.setFont(font)
-        # self.textEdit.setCurrentCharFormat(value)
-        # 
-        # 
         self.textEdit.setFontPointSize(value)
         
 
@@ -300,6 +283,14 @@ class MainWindow(QMainWindow, Form):
         # pass
         val = self.spinBox.value()
         self.textEdit.setFontPointSize(val)
+    
+    # alignments
+    def center_align(self):
+        self.textEdit.setAlignment(QtCore.Qt.AlignCenter)
+    def lef_align(self):
+        self.textEdit.setAlignment(QtCore.Qt.AlignLeft)
+    def rig_align(self):
+        self.textEdit.setAlignment(QtCore.Qt.AlignRight)
 
 # class PlotThread(QtCore.QThread):
 #     update_trigger = QtCore.pyqtSignal(np.ndarray, np.ndarray)
